@@ -1,5 +1,6 @@
 const User = require('../models/User');
 
+// These are all the CRUD functions associated with the User
 module.exports = {
     async getUsers(req, res) {
         try {
@@ -30,12 +31,25 @@ module.exports = {
             res.status(500).json(err);
         }
     },
+    async updateUser(req, res) {
+        try {
+            const updatedUser = await User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'No user with that ID! Try Again' })
+        }
+        res.json({ message: 'User successfully updated', updatedUser});
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
     async deleteUser(req, res) {
         try {
             const deletedUser = await User.findOneAndDelete({ _id: req.params.userId });
         if (!deletedUser) {
             return res.status(404).json({ message: 'No user with that ID! Try Again' })
         }
+        // This should delete the thoughts associated with this user. 
+        await Thought.deleteMany({ userId: deletedUser._id });
         res.json({ message: 'User successfully deleted', deletedUser});
         } catch (err) {
             res.status(500).json(err);

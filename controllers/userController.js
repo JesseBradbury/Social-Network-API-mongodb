@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Thought = require('../models/Thought')
 
-// These are all the CRUD functions associated with the User
+
 module.exports = {
     async getUsers(req, res) {
         try {

@@ -1,6 +1,6 @@
 const Thought = require('../models/Thought');
 const User = require('../models/User');
-const Reaction = require('../models/Reaction')
+
 
 module.exports = {
     async getThoughts(req, res) {
@@ -92,7 +92,7 @@ module.exports = {
         try {
             const updatedThought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: req.params.reactionId } },
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
                 { new: true }
             );
 

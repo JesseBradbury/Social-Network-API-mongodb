@@ -49,8 +49,7 @@ module.exports = {
         if (!deletedUser) {
             return res.status(404).json({ message: 'No user with that ID! Try Again' })
         }
-        // This should delete the thoughts associated with this user. 
-        // TODO: This is breaking the project. Need to adjust. 
+        // This will delete the thoughts associated with that user. 
         console.log(deletedUser);
         await Thought.deleteMany({ _id: {$in:deletedUser.thoughts}});
         res.json({ message: 'User successfully deleted', deletedUser});

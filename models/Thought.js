@@ -10,9 +10,8 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date, 
             default: Date.now,
+            // This is the function that formats the time. 
             get: function (timestamp) {
-                // Format the timestamp using your preferred date formatting library
-                // Here, we are using the built-in toLocaleString() method
                 return timestamp.toLocaleString();
               },
             // TODO: Getter for formatting the timestamp on query. 
@@ -26,6 +25,7 @@ const thoughtSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true,
         },
         id: false,
     }
